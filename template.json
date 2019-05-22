@@ -1,53 +1,55 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"diskName": {
-			"type": "string"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "diskName": {
+            "value": "QA_BOTs_Storage_Blue-Prism"
+        },
+        "location": {
+            "value": "canadaeast"
+        },
+        "sku": {
+            "value": "StandarSSD_LRS"
+        },
+        "diskSizeGb": {
+            "value": "128"
+        },
+        "osType": {
+            "value": ""
+        },
+        "sourceUri": {
+            "value": ""
+        },
+        "sourceResourceId": {
+            "value": ""
+        },
+        "createOption": {
+            "value": "empty"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-06-01",
+            "type": "Microsoft.Compute/disks",
+            "name": "[parameters('diskName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "creationData": {
+                    "createOption": "[parameters('createOption')]"
+                },
+                "diskSizeGB": "[parameters('diskSizeGb')]",
+                "osType": "[parameters('osType')]"
+            },
+			"copy": {
+        "name": "diskcopy",
+        "count": 4,
+        "mode": "serial",
+        "batchSize": 2
 		},
-		"location": {
-			"type": "string"
-		},
-		"sku": {
-			"type": "string"
-		},
-		"diskSizeGb": {
-			"type": "string"
-		},
-		"sourceResourceId": {
-			"type": "string"
-		},
-		"sourceUri": {
-			"type": "string"
-		},
-		"osType": {
-			"type": "string"
-		},
-		"createOption": {
-			"type": "string"
-		}
-	},
-	"resources": [{
-		"apiVersion": "2018-06-01",
-		"type": "Microsoft.Compute/disks",
-		"name": "[parameters('diskName')]",
-		"location": "[parameters('location')]",
-		"properties": {
-			"creationData": {
-				"createOption": "[parameters('createOption')]"
-			},
-			"diskSizeGB": "[parameters('diskSizeGb')]",
-			"osType": "[parameters('osType')]"
-		},
-		"copy": {
-			"name": "storagecopy",
-			"count": 4,
-			"mode": "serial",
-			"batchSize": 2
-		},
-		"sku": {
-			"name": "[parameters('sku')]"
-		},
-		"tags": {}
-	}]
+            "sku": {
+                "name": "[parameters('sku')]"
+            },
+            "tags": {}
+        }
+    ]
 }
