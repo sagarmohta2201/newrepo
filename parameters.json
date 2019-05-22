@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "diskName": {
+            "value": "QA_BOTs_Storage_Blue-Prism"
+        },
+        "location": {
+            "value": "canadaeast"
+        },
+        "sku": {
+            "value": "Premium_LRS"
+        },
+        "diskSizeGb": {
+            "value": "1023"
+        },
+        "osType": {
+            "value": ""
+        },
+        "sourceUri": {
+            "value": ""
+        },
+        "sourceResourceId": {
+            "value": ""
+        },
+        "createOption": {
+            "value": "empty"
+        }
+    }
+}
