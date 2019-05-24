@@ -1,52 +1,43 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"diskName": {
-			"value": "QA_BOTs_Storage_Blue-Prism"
-		},
-		"location": {
-			"value": "canadaeast"
-		},
-		"sku": {
-			"value": "StandarSSD_LRS"
-		},
-		"diskSizeGb": {
-			"value": "128"
-		},
-		"osType": {
-			"value": ""
-		},
-		"sourceUri": {
-			"value": ""
-		},
-		"sourceResourceId": {
-			"value": ""
-		},
-		"createOption": {
-			"value": "empty"
-		}
-	},
-	"resources": [{
-		"apiVersion": "2018-06-01",
-		"type": "Microsoft.Compute/disks",
-		"name": "[parameters('diskName')]",
-		"location": "[parameters('location')]",
-		"dependsOn": ["storage-disk"],
-		"properties": {
-			"creationData": {
-				"createOption": "[parameters('createOption')]"
-			},
-			"diskSizeGB": "[parameters('diskSizeGb')]",
-			"osType": "[parameters('osType')]"
-		},
-		"sku": {
-			"name": "[parameters('sku')]"
-		},
-		"copy": {
-			"name": "storage-disk",
-			"count": 15
-		},
-		"tags": {}
-	}]
+
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+
+  "contentVersion": "1.0.0.0",
+
+  "resources": [
+
+    {
+
+      "apiVersion": "2016-01-01",
+
+      "type": "Microsoft.Storage/storageAccounts",
+
+      "name": "[concat(copyIndex(),'storage', uniqueString(resourceGroup().id))]",
+
+      "location": "[resourceGroup().location]",
+
+      "sku": {
+
+        "name": "Standard_LRS"
+
+      },
+
+      "kind": "Storage",
+
+      "properties": {},
+
+      "copy": {
+
+        "name": "storagecopy",
+
+        "count": 3
+
+      }
+
+    }
+
+  ],
+
+  "outputs": {}
+
 }
